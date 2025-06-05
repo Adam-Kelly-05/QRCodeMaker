@@ -1,0 +1,23 @@
+﻿<Window x:Class="QRCodeMaker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QRCodeMaker"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="QR Code Maker" FontWeight="Bold" FontSize="36" Margin="20,10,488,345"/>
+        <Label Content="Enter the text you want to turn into a QR Code" HorizontalAlignment="Left" Margin="24,80,0,0" VerticalAlignment="Top" FontSize="18" Width="390"/>
+        <TextBox x:Name="Input_TXTBX" HorizontalAlignment="Left" Margin="31,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369" FontSize="18" BorderThickness="2,2,2,2" Height="180"/>
+        <Label Content="Error Correction Level:" HorizontalAlignment="Left" Margin="31,316,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <ComboBox x:Name="ErrorCorrection_CMBOX" SelectedIndex="0" FontSize="18" Margin="220,316,386,60">
+            <ComboBoxItem Content="Low = ~7%"/>
+            <ComboBoxItem Content="Medium = ~15%"/>
+            <ComboBoxItem Content="High = ~25%"/>
+            <ComboBoxItem Content="Ultra High = ~30%"/>
+        </ComboBox>
+        <Button x:Name="Generate_BTN" Content=" Generate " HorizontalAlignment="Left" Margin="31,361,0,0" VerticalAlignment="Top" FontSize="18" Click="Generate_BTN_Click"/>
+        <Image x:Name="QRCode_IMG" HorizontalAlignment="Left" Height="300" Margin="437,75,0,0" VerticalAlignment="Top" Width="300"/>
+    </Grid>
+</Window>
