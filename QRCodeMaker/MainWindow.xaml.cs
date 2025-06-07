@@ -28,35 +28,48 @@ namespace QRCodeMaker
             return image;
         }
 
+        private void TooManyCharactersError()
+        {
+            Input_TXTBX.Text = "";
+            MessageBox.Show("This is too many characters to be encoded, please shorten the lenght of the text or choose a smaller encoding level!");
+        }
 
         private void Generate_BTN_Click(object sender, RoutedEventArgs e)
         {
             string text = Input_TXTBX.Text;
 
             int chosenErrorCorrectionLevel = ErrorCorrection_CMBOX.SelectedIndex;
-            QRCodeGenerator.ECCLevel eccLevel;
+            QRCodeGenerator.ECCLevel? eccLevel = null;
             switch (chosenErrorCorrectionLevel)
             {
                 case 0:
-                    eccLevel = QRCodeGenerator.ECCLevel.L;
+                    if (text.Length < 980)
+                        eccLevel = QRCodeGenerator.ECCLevel.L;
                     break;
                 case 1:
-                    eccLevel = QRCodeGenerator.ECCLevel.M;
+                    if (text.Length < 775)
+                        eccLevel = QRCodeGenerator.ECCLevel.M;
                     break;
                 case 2:
-                    eccLevel = QRCodeGenerator.ECCLevel.Q;
+                    if (text.Length < 550)
+                        eccLevel = QRCodeGenerator.ECCLevel.Q;
                     break;
                 case 3:
-                    eccLevel = QRCodeGenerator.ECCLevel.H;
-                    break;
-                default:
-                    eccLevel = QRCodeGenerator.ECCLevel.L;
+                    if (text.Length < 415)
+                        eccLevel = QRCodeGenerator.ECCLevel.H;
                     break;
             }
 
-            using (PngByteQRCode qrCode = new PngByteQRCode(new QRCodeGenerator().CreateQrCode(text, eccLevel)))
+            if (eccLevel != null)
             {
-                QRCode_IMG.Source = ByteArrayToImageSource(qrCode.GetGraphic(20));
+                using (PngByteQRCode qrCode = new PngByteQRCode(new QRCodeGenerator().CreateQrCode(text, (QRCodeGenerator.ECCLevel)eccLevel)))
+                {
+                    QRCode_IMG.Source = ByteArrayToImageSource(qrCode.GetGraphic(20));
+                }
+            }
+            else
+            {
+                TooManyCharactersError();
             }
         }
     }
